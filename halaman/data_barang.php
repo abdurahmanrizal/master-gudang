@@ -50,8 +50,16 @@
                         <input type="text" id="no_barang" name="no_barang" class="form-control" placeholder="No Barang" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">STOK</label>
-                        <input type="number" min="0" id="stok" name="stok" class="form-control" placeholder="Stok" required>
+                        <label for="exampleInputPassword1" id="stok-bagus-label">STOK BARANG BAGUS</label>
+                        <input type="number" min="0" id="stok" name="stok" class="form-control" placeholder="Stok barang bagus" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1" id="stok-sedang-label">STOK BARANG SEDANG</label>
+                        <input type="number" min="0" id="stok_sedang" name="stok_sedang" class="form-control" placeholder="Stok barang sedang" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1" id="stok-rusak-label">STOK BARANG RUSAK</label>
+                        <input type="number" min="0" id="stok_rusak" name="stok_rusak" class="form-control" placeholder="Stok barang sedang" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">RAK</label>
@@ -99,7 +107,9 @@
                 <th scope="col">KODE BARANG</th>
                 <th scope="col">NO BARANG</th>
                 <th scope="col">NAMA BARANG</th>
-                <th scope="col">STOK</th>
+                <th scope="col">STOK BARANG BAGUS</th>
+                <th scope="col">STOK BARANG SEDANG</th>
+                <th scope="col">STOK BARANG RUSAK</th>
                 <th scope="col">RAK</th>
                 <th scope="col">JENIS BARANG</th>
                 <th scope="col">ACTION</th>
@@ -122,6 +132,8 @@
                         }
                         echo "<td>".$row['nama_barang']."</td>";
                         echo "<td>".$row['stok']."</td>";
+                        echo "<td>".$row['stok_sedang']."</td>";
+                        echo "<td>".$row['stok_rusak']."</td>";
                         if($row['rak'] == ""){
                             echo "<td>-</td>";
                         }else{
@@ -210,6 +222,10 @@
         $('#barang').DataTable();
         $('#add').click(function(){
             $('#insert').val("Submit");
+            document.getElementById("header_modal_form").innerHTML = "Tambah Barang";
+            document.getElementById("stok-bagus-label").innerHTML = "JUMLAH STOK BARANG BAGUS YANG INGIN DI SIMPAN";
+            document.getElementById("stok-sedang-label").innerHTML = "JUMLAH STOK BARANG SEDANG INGIN DI SIMPAN";
+            document.getElementById("stok-rusak-label").innerHTML = "JUMLAH STOK BARANG RUSAK INGIN DI SIMPAN";
             $('#form-data-barang')[0].reset();
             $('input#stok').bind('keypress', function (e) {
                 return !(e.which != 8 && e.which != 0 &&
@@ -221,7 +237,7 @@
         });
         $('#form-data-barang').on('submit', function(e){
             e.preventDefault();
-            document.getElementById("header_modal_form").innerHTML = "Tambah Barang";
+           
             var id = $("#data_tambah_barang").find("input[name='barang_id']").val();
             $.ajax({
                 url: 'halaman/aksi_tambah_barang.php',
@@ -257,6 +273,9 @@
         $(document).on('click', '.edit_barang', function(e){
             e.preventDefault();
             document.getElementById("header_modal_form").innerHTML = "Update Barang";
+            document.getElementById("stok-bagus-label").innerHTML = "JUMLAH STOK BARANG BAGUS YANG INGIN DI EDIT";
+            document.getElementById("stok-sedang-label").innerHTML = "JUMLAH STOK BARANG SEDANG INGIN DI EDIT";
+            document.getElementById("stok-rusak-label").innerHTML = "JUMLAH STOK BARANG RUSAK INGIN DI EDIT";
             var barang_id = $(this).attr("id");
             $.ajax({
                 url         : "halaman/edit_barang.php",
@@ -268,6 +287,8 @@
                     $('#nama_barang').val(data.nama_barang);
                     $('#no_barang').val(data.no_barang);
                     $('#stok').val(data.stok);
+                    $('#stok_sedang').val(data.stok_sedang);
+                    $('#stok_rusak').val(data.stok_rusak);
                     $('#rak_barang').val(data.rak);
                     $('#nama_jenis_barang').val(data.id_jenis);
                     $('#barang_id').val(data.id_barang);

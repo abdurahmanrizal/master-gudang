@@ -2,6 +2,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item">Overview</li>
         <li class="breadcrumb-item active">Data Barang Masuk</li>
+        <li>OKE</li>
     </ol>
 
     <!-- <a href="#" class="btn btn-success mb-3">
